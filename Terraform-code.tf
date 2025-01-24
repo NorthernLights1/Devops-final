@@ -13,7 +13,7 @@ variable "private_key_path" {
 
 variable "instance_ami" {
   description = "AMI ID to use for all instances"
-  default     = "ami-08970251d20e940b0"
+  default     = "ami-08970251d20e940b0" ami-08970251d20e940b0
 }
 
 variable "instance_type" {
@@ -59,19 +59,14 @@ resource "aws_security_group" "common_sg" {
 resource "aws_instance" "jenkins_master" {
   ami           = var.instance_ami
   instance_type = var.instance_type
-  key_name      = "my-key"
+  
   security_groups = [aws_security_group.common_sg.name]
 
   tags = {
     Name = "jenkins-master"
   }
 
-  connection {
-  type        = "ssh"
-  user        = "ec2-user"
-  private_key = file(var.private_key_path)
-  host        = self.public_ip  # Use the instance's public IP
-}
+ 
 
   provisioner "local-exec" {
     command = "echo '${self.public_ip} jenkins-master' >> ./ansible_inventory"
@@ -81,19 +76,14 @@ resource "aws_instance" "jenkins_master" {
 resource "aws_instance" "jenkins_worker" {
   ami           = var.instance_ami
   instance_type = var.instance_type
-  key_name      = "my-key"
+  
   security_groups = [aws_security_group.common_sg.name]
 
   tags = {
     Name = "jenkins-worker"
   }
 
-  connection {
-  type        = "ssh"
-  user        = "ec2-user"
-  private_key = file(var.private_key_path)
-  host        = self.public_ip  # Use the instance's public IP
-}
+ 
 
   provisioner "local-exec" {
     command = "echo '${self.public_ip} jenkins-worker' >> ./ansible_inventory"
@@ -103,19 +93,14 @@ resource "aws_instance" "jenkins_worker" {
 resource "aws_instance" "kubernetes_master" {
   ami           = var.instance_ami
   instance_type = var.instance_type
-  key_name      = "my-key"
+  
   security_groups = [aws_security_group.common_sg.name]
 
   tags = {
     Name = "kubernetes-master"
   }
 
-  connection {
-  type        = "ssh"
-  user        = "ec2-user"
-  private_key = file(var.private_key_path)
-  host        = self.public_ip  # Use the instance's public IP
-}
+ 
 
   provisioner "local-exec" {
     command = "echo '${self.public_ip} kubernetes-master' >> ./ansible_inventory"
@@ -125,19 +110,14 @@ resource "aws_instance" "kubernetes_master" {
 resource "aws_instance" "kubernetes_agent" {
   ami           = var.instance_ami
   instance_type = var.instance_type
-  key_name      = "my-key"
+  
   security_groups = [aws_security_group.common_sg.name]
 
   tags = {
     Name = "kubernetes-agent"
   }
 
-  connection {
-  type        = "ssh"
-  user        = "ec2-user"
-  private_key = file(var.private_key_path)
-  host        = self.public_ip  # Use the instance's public IP
-}
+ 
 
   provisioner "local-exec" {
     command = "echo '${self.public_ip} kubernetes-agent' >> ./ansible_inventory"
@@ -147,19 +127,14 @@ resource "aws_instance" "kubernetes_agent" {
 resource "aws_instance" "pg_instance" {
   ami           = var.instance_ami
   instance_type = var.instance_type
-  key_name      = "my-key"
+  
   security_groups = [aws_security_group.common_sg.name]
 
   tags = {
     Name = "PG-instance"
   }
 
-  connection {
-  type        = "ssh"
-  user        = "ec2-user"
-  private_key = file(var.private_key_path)
-  host        = self.public_ip  # Use the instance's public IP
-}
+ 
 
   provisioner "local-exec" {
     command = "echo '${self.public_ip} pg-instance' >> ./ansible_inventory"
