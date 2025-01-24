@@ -3,7 +3,7 @@
 # Instances will be t2.micro, using a specified AMI ID, and prepared for Ansible automation
 
 provider "aws" {
-  region = "us-east-1"
+  region = "us-east-2"
 }
 
 variable "private_key_path" {
