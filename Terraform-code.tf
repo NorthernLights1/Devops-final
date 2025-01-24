@@ -6,11 +6,6 @@ provider "aws" {
   region = "us-east-2"
 }
 
-variable "private_key_path" {
-  description = "Path to the private key file used to SSH into instances"
-  default     = "~/.ssh/my-key.pem"
-}
-
 variable "instance_ami" {
   description = "AMI ID to use for all instances"
   default     = "ami-08970251d20e940b0"
