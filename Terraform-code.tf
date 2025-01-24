@@ -13,7 +13,7 @@ variable "private_key_path" {
 
 variable "instance_ami" {
   description = "AMI ID to use for all instances"
-  default     = "ami-08970251d20e940b0" ami-08970251d20e940b0
+  default     = "ami-08970251d20e940b0"
 }
 
 variable "instance_type" {
