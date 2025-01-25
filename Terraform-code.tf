@@ -94,7 +94,7 @@ resource "aws_instance" "jenkins_worker" {
 
 resource "aws_instance" "kubernetes_master" {
   ami           = var.instance_ami
-  instance_type = var.instance_type
+  instance_type = t3a.medium
   
   security_groups = [aws_security_group.common_sg.name]
 
@@ -111,7 +111,7 @@ resource "aws_instance" "kubernetes_master" {
 
 resource "aws_instance" "kubernetes_agent" {
   ami           = var.instance_ami
-  instance_type = var.instance_type
+  instance_type = t3a.medium
   
   security_groups = [aws_security_group.common_sg.name]
 
