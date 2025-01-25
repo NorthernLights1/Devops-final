@@ -1,7 +1,3 @@
-# Terraform code to provision 5 EC2 instances and set up integration with Ansible
-# Each instance is assigned a specific role (e.g., Jenkins Master, Kubernetes Agent, etc.)
-# Instances will be t2.micro, using a specified AMI ID, and prepared for Ansible automation
-
 provider "aws" {
   region = "us-east-2"
 }
@@ -16,7 +12,7 @@ variable "instance_type" {
   default     = "t2.micro"
 }
 
-# Security group allowing SSH and HTTP/HTTPS access
+# Security group allowing necessary access
 resource "aws_security_group" "common_sg" {
   name        = "common-sg"
   description = "Allow necessary access for SSH, HTTP, HTTPS, Jenkins, Kubernetes, and monitoring"
@@ -113,110 +109,83 @@ resource "aws_security_group" "common_sg" {
   }
 }
 
-
-# Function to create an instance
+# EC2 instances
 resource "aws_instance" "jenkins_master" {
   ami           = var.instance_ami
   instance_type = var.instance_type
-  
   security_groups = [aws_security_group.common_sg.name]
 
   tags = {
     Name = "jenkins-master"
-  }
-
- 
-
-  provisioner "local-exec" {
-    command = "echo '${self.public_ip} jenkins-master' >> ./ansible_inventory"
   }
 }
 
 resource "aws_instance" "jenkins_worker" {
   ami           = var.instance_ami
   instance_type = var.instance_type
-  
   security_groups = [aws_security_group.common_sg.name]
 
   tags = {
     Name = "jenkins-worker"
-  }
-
- 
-
-  provisioner "local-exec" {
-    command = "echo '${self.public_ip} jenkins-worker' >> ./ansible_inventory"
   }
 }
 
 resource "aws_instance" "kubernetes_master" {
   ami           = var.instance_ami
   instance_type = "t3a.medium"
-  
   security_groups = [aws_security_group.common_sg.name]
 
   tags = {
     Name = "kubernetes-master"
-  }
-
- 
-
-  provisioner "local-exec" {
-    command = "echo '${self.public_ip} kubernetes-master' >> ./ansible_inventory"
   }
 }
 
 resource "aws_instance" "kubernetes_agent" {
   ami           = var.instance_ami
   instance_type = "t3a.medium"
-  
   security_groups = [aws_security_group.common_sg.name]
 
   tags = {
     Name = "kubernetes-agent"
-  }
-
- 
-
-  provisioner "local-exec" {
-    command = "echo '${self.public_ip} kubernetes-agent' >> ./ansible_inventory"
   }
 }
 
 resource "aws_instance" "pg_instance" {
   ami           = var.instance_ami
   instance_type = var.instance_type
-  
   security_groups = [aws_security_group.common_sg.name]
 
   tags = {
     Name = "PG-instance"
   }
-
- 
-
-  provisioner "local-exec" {
-    command = "echo '${self.public_ip} pg-instance' >> ./ansible_inventory"
-  }
 }
 
-# Output the generated Ansible inventory
-output "jenkins_master_ip" {
-    value = "${aws_instance.jenkins_master.public_ip}"
-}
-
-output "jenkins_worker_ip" {
-    value = "${aws_instance.jenkins_worker.public_ip}"
-}
-
-output "kubernetes_master_ip" {
-    value = "${aws_instance.kubernetes_master.public_ip}"
-}
-
-output "kubernetes_agent_ip" {
-    value = "${aws_instance.kubernetes_agent.public_ip}"
-}
-
-output "pg_instance_ip" {
-    value = "${aws_instance.pg_instance.public_ip}"
+# Output the generated Ansible inventory in YAML format
+output "ansible_inventory" {
+  value = yamlencode({
+    all = {
+      hosts = {
+        jenkins_master = {
+          ansible_host = aws_instance.jenkins_master.public_ip
+          ansible_user = "ec2-user"
+        }
+        jenkins_worker = {
+          ansible_host = aws_instance.jenkins_worker.public_ip
+          ansible_user = "ec2-user"
+        }
+        kubernetes_master = {
+          ansible_host = aws_instance.kubernetes_master.public_ip
+          ansible_user = "ec2-user"
+        }
+        kubernetes_agent = {
+          ansible_host = aws_instance.kubernetes_agent.public_ip
+          ansible_user = "ec2-user"
+        }
+        pg_instance = {
+          ansible_host = aws_instance.pg_instance.public_ip
+          ansible_user = "ec2-user"
+        }
+      }
+    }
+  })
 }
