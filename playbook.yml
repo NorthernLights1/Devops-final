@@ -1,0 +1,184 @@
+- name: Configure Jenkins Master
+  hosts: jenkins-master
+  tasks:
+    # Update dnf packages
+    - name: Update system packages
+      dnf:
+        update_cache: yes
+      become: true
+    # Install Jenkins
+    - name: Install Jenkins
+      get_url:
+        url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+        dest: /etc/yum.repos.d/jenkins.repo
+      become: true
+    - name: Import Jenkins Key
+      command: rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+      become: true
+    - name: Upgrade system packages
+      command: dnf upgrade -y
+      become: true
+    # Add required dependencies for the jenkins package
+    - name: Install Java
+      dnf: 
+        name:
+          - fontconfig
+          - java-17-openjdk
+        state: present
+      become: true
+    - name: Install Jenkins
+      dnf:
+        name: jenkins
+        state: present
+      become: true
+    - name: Reload daemon 
+      command: systemctl daemon-reload
+      become: true
+    # Start and Enable Jenkins
+    - name: Enable Jenkins
+      service:
+        name: jenkins
+        state: started
+        enabled: yes
+      become: true
+- name: Configure Jenkins Worker
+  hosts: jenkins-worker
+  tasks:
+    # Update dnf packages
+    - name: Update system packages
+      dnf:
+        update_cache: yes
+      become: true
+    # Install Jenkis
+    - name: Install Jenkins
+      get_url:
+        url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+        dest: /etc/yum.repos.d/jenkins.repo
+      become: true
+    - name: Import Jenkins Key
+      command: rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+      become: true
+    - name: dnf upgrade
+      command: dnf upgrade -y
+      become: true
+    # Add required dependencies for the jenkins package
+    - name: Install Java
+      dnf: 
+        name:
+          - fontconfig
+          - java-17-openjdk
+        state: present
+      become: true
+    - name: Install Jenkins
+      dnf:
+        name: jenkins
+        state: present
+      become: true
+    - name : Reload daemon 
+      command: systemctl daemon-reload
+      become: true
+    # Start and Enable Jenkins
+    - name: Enable Jenkins
+      service:
+        name: jenkins
+        state: started
+        enabled: yes
+      become: true
+###      
+# Install Kubernetes Master and Worker
+###
+- name: Kubernetes Cluster Setup
+  hosts: all
+  become: true
+  vars:
+    kubernetes_version: "1.32.0"
+    pod_network_cidr: "192.168.0.0/16"
+    join_command: ""
+
+  tasks:
+    # Common Steps for All Nodes (Master and Workers)
+    - name: Disable swap
+      command: swapoff -a
+      when: ansible_facts['swaptotal_mb'] > 0
+
+    - name: Remove swap entry from fstab
+      lineinfile:
+        path: /etc/fstab
+        regexp: '.*swap.*'
+        state: absent
+
+    - name: Install required dependencies
+      dnf:
+        name:
+          - dnf-plugins-core
+          - curl
+          - ca-certificates
+        state: present
+        update_cache: true
+
+    - name: Add Kubernetes repository
+      command: |
+        dnf config-manager --add-repo=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+        dnf config-manager --set-enabled kubernetes
+
+    - name: Install Kubernetes components
+      dnf:
+        name:
+          - kubeadm-{{ kubernetes_version }}
+          - kubelet-{{ kubernetes_version }}
+          - kubectl-{{ kubernetes_version }}
+        state: present
+
+    - name: Enable kubelet service
+      service:
+        name: kubelet
+        state: started
+        enabled: true
+
+    # Step 1: Set up Kubernetes Master Node
+    - name: Initialize Kubernetes Master
+      shell: kubeadm init --pod-network-cidr={{ pod_network_cidr }}
+      when: inventory_hostname == "kubernetes-master"
+      args:
+        creates: /etc/kubernetes/admin.conf
+
+    - name: Configure kubectl for root (Master Node Only)
+      shell: |
+        mkdir -p $HOME/.kube &&
+        cp -i /etc/kubernetes/admin.conf $HOME/.kube/config &&
+        chown $(id -u):$(id -g) $HOME/.kube/config
+      when: inventory_hostname == "kubernetes-master"
+      args:
+        creates: /root/.kube/config
+
+    - name: Install Calico Network Plugin (Master Node Only)
+      shell: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+      when: inventory_hostname == "kubernetes-master"
+      args:
+        creates: /root/calico-applied
+
+    # Step 2: Prepare Worker Nodes
+    - name: Fetch Kubernetes join command (Master Node Only)
+      shell: kubeadm token create --print-join-command
+      register: join_command_output
+      when: inventory_hostname == "kubernetes-master"
+      run_once: true
+
+    - name: Set join command for Worker Nodes
+      set_fact:
+        join_command: "{{ join_command_output.stdout }}"
+      when: inventory_hostname == "kubernetes-master"
+      run_once: true
+
+    # Step 3: Join Worker Nodes to Master
+    - name: Join Worker Nodes to Kubernetes Cluster
+      shell: "{{ hostvars[inventory_hostname]['join_command'] }}"
+      when: inventory_hostname != "kubernetes-master"
+      args:
+        creates: /var/lib/kubelet/config.yaml
+
+  # Post tasks to verify the cluster setup
+  post_tasks:
+    - name: Verify nodes in the cluster (Master Node Only)
+      shell: kubectl get nodes
+      when: inventory_hostname == "kubernetes-master"
