@@ -19,7 +19,7 @@ variable "instance_type" {
 # Security group allowing SSH and HTTP/HTTPS access
 resource "aws_security_group" "common_sg" {
   name        = "common-sg"
-  description = "Allow SSH, HTTP, and HTTPS access"
+  description = "Allow necessary access for SSH, HTTP, HTTPS, Jenkins, Kubernetes, and monitoring"
 
   ingress {
     from_port   = 22
@@ -42,20 +42,61 @@ resource "aws_security_group" "common_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-    ingress {
+  ingress {
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-      ingress {
+  ingress {
+    from_port   = 50000
+    to_port     = 50000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     from_port   = 6443
     to_port     = 6443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    from_port   = 10250
+    to_port     = 10250
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 2379
+    to_port     = 2380
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 30000
+    to_port     = 32767
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 9090
+    to_port     = 9090
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
   egress {
     from_port   = 0
@@ -64,6 +105,7 @@ resource "aws_security_group" "common_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
 
 # Function to create an instance
 resource "aws_instance" "jenkins_master" {
