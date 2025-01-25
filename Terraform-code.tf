@@ -202,5 +202,11 @@ resource "aws_instance" "pg_instance" {
 
 # Output the generated Ansible inventory
 output "ansible_inventory" {
-  value = "cat ./ansible_inventory"
+    value = join("\n", [
+        "${aws_instance.jenkins_master.public_ip} jenkins-master",
+        "${aws_instance.jenkins_worker.public_ip} jenkins-worker",
+        "${aws_instance.kubernetes_master.public_ip} kubernetes-master",
+        "${aws_instance.kubernetes_agent.public_ip} kubernetes-agent",
+        "${aws_instance.pg_instance.public_ip} pg-instance"
+    ])
 }
