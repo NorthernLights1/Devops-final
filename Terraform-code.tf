@@ -166,24 +166,24 @@ output "ansible_inventory" {
     all = {
       hosts = {
         jenkins_master = {
-          ansible_host = aws_instance.jenkins_master.public_ip
-          ansible_user = "ec2-user"
+          ansible_host = aws_instance.jenkins_master.id
+          ansible_connection = "amazon.aws.ssm"
         }
         jenkins_worker = {
-          ansible_host = aws_instance.jenkins_worker.public_ip
-          ansible_user = "ec2-user"
+          ansible_host = aws_instance.jenkins_worker.id
+          ansible_connection = "amazon.aws.ssm"
         }
         kubernetes_master = {
-          ansible_host = aws_instance.kubernetes_master.public_ip
-          ansible_user = "ec2-user"
+          ansible_host = aws_instance.kubernetes_master.id
+          ansible_connection = "amazon.aws.ssm"
         }
         kubernetes_agent = {
-          ansible_host = aws_instance.kubernetes_agent.public_ip
-          ansible_user = "ec2-user"
+          ansible_host = aws_instance.kubernetes_agent.id
+          ansible_connection = "amazon.aws.ssm"
         }
         pg_instance = {
-          ansible_host = aws_instance.pg_instance.public_ip
-          ansible_user = "ec2-user"
+          ansible_host = aws_instance.pg_instance.id
+          ansible_connection = "amazon.aws.ssm"
         }
       }
     }
