@@ -182,3 +182,4 @@
     - name: Verify nodes in the cluster (Master Node Only)
       shell: kubectl get nodes
       when: inventory_hostname == "kubernetes-master"
+      
