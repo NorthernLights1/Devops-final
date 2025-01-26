@@ -113,7 +113,7 @@ resource "aws_security_group" "common_sg" {
 resource "aws_instance" "jenkins_master" {
   ami           = var.instance_ami
   instance_type = var.instance_type
-  key_name      = "devops_final"
+  key_name      = "Devops Final"
   security_groups = [aws_security_group.common_sg.name]
 
   tags = {
@@ -124,7 +124,7 @@ resource "aws_instance" "jenkins_master" {
 resource "aws_instance" "jenkins_worker" {
   ami           = var.instance_ami
   instance_type = var.instance_type
-  key_name      = "devops_final"
+  key_name      = "DevOps Final"
   security_groups = [aws_security_group.common_sg.name]
 
   tags = {
@@ -135,7 +135,7 @@ resource "aws_instance" "jenkins_worker" {
 resource "aws_instance" "kubernetes_master" {
   ami           = var.instance_ami
   instance_type = "t3a.medium"
-  key_name      = "devops_final"
+  key_name      = "DevOps Final"
   security_groups = [aws_security_group.common_sg.name]
 
   tags = {
@@ -146,7 +146,7 @@ resource "aws_instance" "kubernetes_master" {
 resource "aws_instance" "kubernetes_agent" {
   ami           = var.instance_ami
   instance_type = "t3a.medium"
-  key_name      = "devops_final"
+  key_name      = "DevOps Final"
   security_groups = [aws_security_group.common_sg.name]
 
   tags = {
@@ -157,7 +157,7 @@ resource "aws_instance" "kubernetes_agent" {
 resource "aws_instance" "pg_instance" {
   ami           = var.instance_ami
   instance_type = var.instance_type
-  key_name      = "devops_final"
+  key_name      = "DevOps Final"
   security_groups = [aws_security_group.common_sg.name]
 
   tags = {
@@ -173,27 +173,27 @@ output "ansible_inventory" {
         jenkins_master = {
           ansible_host     = aws_instance.jenkins_master.public_ip
           ansible_user     = "ec2-user"
-          ansible_ssh_key  = file("~/.ssh/devops_final")
+          ansible_ssh_key  = file("~/.ssh/Devops Final.pem")
         }
         jenkins_worker = {
           ansible_host     = aws_instance.jenkins_worker.public_ip
           ansible_user     = "ec2-user"
-          ansible_ssh_key  = file("~/.ssh/devops_final")
+          ansible_ssh_key  = file("~/.ssh/Devops Final.pem")
         }
         kubernetes_master = {
           ansible_host     = aws_instance.kubernetes_master.public_ip
           ansible_user     = "ec2-user"
-          ansible_ssh_key  = file("~/.ssh/devops_final")
+          ansible_ssh_key  = file("~/.ssh/Devops Final.pem")
         }
         kubernetes_agent = {
           ansible_host     = aws_instance.kubernetes_agent.public_ip
           ansible_user     = "ec2-user"
-          ansible_ssh_key  = file("~/.ssh/devops_final")
+          ansible_ssh_key  = file("~/.ssh/Devops Final.pem")
         }
         pg_instance = {
           ansible_host     = aws_instance.pg_instance.public_ip
           ansible_user     = "ec2-user"
-          ansible_ssh_key  = file("~/.ssh/devops_final")
+          ansible_ssh_key  = file("~/.ssh/Devops Final.pem")
         }
       }
     }
