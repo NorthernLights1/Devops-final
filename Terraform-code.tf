@@ -170,27 +170,27 @@ output "ansible_inventory" {
   value = yamlencode({
     all = {
       hosts = {
-        jenkins_master = {
+        jenkins-master = {
           ansible_host     = aws_instance.jenkins_master.public_ip
           ansible_user     = "ec2-user"
           ansible_ssh_key  = file("~/.ssh/Devops Final.pem")
         }
-        jenkins_worker = {
+        jenkins-worker = {
           ansible_host     = aws_instance.jenkins_worker.public_ip
           ansible_user     = "ec2-user"
           ansible_ssh_key  = file("~/.ssh/Devops Final.pem")
         }
-        kubernetes_master = {
+        kubernetes-master = {
           ansible_host     = aws_instance.kubernetes_master.public_ip
           ansible_user     = "ec2-user"
           ansible_ssh_key  = file("~/.ssh/Devops Final.pem")
         }
-        kubernetes_agent = {
+        kubernetes-agent = {
           ansible_host     = aws_instance.kubernetes_agent.public_ip
           ansible_user     = "ec2-user"
           ansible_ssh_key  = file("~/.ssh/Devops Final.pem")
         }
-        pg_instance = {
+        PG-instance = {
           ansible_host     = aws_instance.pg_instance.public_ip
           ansible_user     = "ec2-user"
           ansible_ssh_key  = file("~/.ssh/Devops Final.pem")
