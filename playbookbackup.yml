@@ -1,0 +1,184 @@
+- name: Configure Jenkins Master
+  hosts: jenkins-master
+  vars:
+    ansible_ssh_private_key_file: /home/ec2-user/.ssh/devops_final.pem  # Path to your private key
+    ansible_user: ec2-user                                  # SSH username
+  tasks:
+    # Update dnf packages
+    - name: Update system packages
+      dnf:
+        update_cache: yes
+      become: true
+    # Install Jenkins
+    - name: Install Jenkins
+      get_url:
+        url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+        dest: /etc/yum.repos.d/jenkins.repo
+      become: true
+    - name: Import Jenkins Key
+      command: rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+      become: true
+    - name: Upgrade system packages
+      command: dnf upgrade -y
+      become: true
+    # Add required dependencies for the jenkins package
+    - name: Install Java
+      dnf:
+        name:
+          - fontconfig
+          - java-17-amazon-corretto
+        state: present
+      become: true
+
+    - name: Install Jenkins
+      dnf:
+        name: jenkins
+        state: present
+      become: true
+    - name: Reload daemon 
+      command: systemctl daemon-reload
+      become: true
+    # Start and Enable Jenkins
+    - name: Enable Jenkins
+      service:
+        name: jenkins
+        state: started
+        enabled: yes
+      become: true
+
+- name: Configure Jenkins Worker
+  hosts: jenkins-worker
+  vars:
+    ansible_ssh_private_key_file: /home/ec2-user/.ssh/devops_final.pem  # Path to your private key
+    ansible_user: ec2-user                                  # SSH username
+  tasks:
+    # Update dnf packages
+    - name: Update system packages
+      dnf:
+        update_cache: yes
+      become: true
+    # Install Jenkins
+    - name: Install Jenkins
+      get_url:
+        url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+        dest: /etc/yum.repos.d/jenkins.repo
+      become: true
+    - name: Import Jenkins Key
+      command: rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+      become: true
+    - name: Upgrade system packages
+      command: dnf upgrade -y
+      become: true
+    # Add required dependencies for the jenkins package
+    - name: Install Java
+      dnf: 
+        name:
+          - fontconfig
+          - java-17-amazon-corretto
+        state: present
+      become: true
+    - name: Install Jenkins
+      dnf:
+        name: jenkins
+        state: present
+      become: true
+    - name: Reload daemon 
+      command: systemctl daemon-reload
+      become: true
+    # Start and Enable Jenkins
+    - name: Enable Jenkins
+      service:
+        name: jenkins
+        state: started
+        enabled: yes
+      become: true     
+
+
+- name: Install and Configure MicroK8s
+  hosts: kubernetes
+  become: yes
+  vars:
+    # List of MicroK8s add-ons to enable (optional)
+    microk8s_addons:
+      - dns
+      - dashboard
+      - ingress
+    # The user that should be part of the microk8s group
+    # Typically your Ansible remote_user, e.g. "ubuntu"
+    microk8s_user: "{{ ansible_user | default('ubuntu') }}"
+
+  tasks:
+    #####################################################################
+    # 1. Install snapd if missing                                       #
+    #####################################################################
+    - name: Ensure snapd is installed
+      package:
+        name: snapd
+        state: present
+      # For Ubuntu 18.04+ snapd is usually installed by default,
+      # but we ensure it for idempotency across various Ubuntu versions.
+
+    #####################################################################
+    # 2. Install MicroK8s via snap                                      #
+    #####################################################################
+    - name: Install MicroK8s (snap)
+      snap:
+        name: microk8s
+        state: present
+        classic: yes
+      # This is idempotent: If microk8s is already installed,
+      # it won’t reinstall unless there's a newer version.
+
+    #####################################################################
+    # 3. Add user to microk8s group                                     #
+    #####################################################################
+    - name: Ensure the microk8s group exists
+      group:
+        name: microk8s
+        state: present
+
+    - name: Add "{{ microk8s_user }}" to the microk8s group
+      user:
+        name: "{{ microk8s_user }}"
+        groups: microk8s
+        append: yes
+      # If the user is already in that group, Ansible will skip.
+
+    #####################################################################
+    # 4. Fix ~/.kube ownership (if present)                             #
+    #####################################################################
+    - name: Fix ownership of ~/.kube
+      file:
+        path: "/home/{{ microk8s_user }}/.kube"
+        owner: "{{ microk8s_user }}"
+        group: "{{ microk8s_user }}"
+        recurse: yes
+      when: ansible_user_dir is defined and
+            ansible_user_dir == "/home/{{ microk8s_user }}" and
+            ansible_user_dir | length > 0
+      # This is just in case ~/.kube already exists. If it doesn't,
+      # the task will fail unless we do state=directory, but we only
+      # want to fix ownership if the dir actually exists.
+
+    #####################################################################
+    # 5. Wait for MicroK8s to be ready                                  #
+    #####################################################################
+    - name: Wait until MicroK8s is ready
+      command: microk8s status --wait-ready
+      register: microk8s_status
+      changed_when: false
+      # 'status --wait-ready' will block until MicroK8s is operational
+      # or time out. If it's already ready, this completes quickly.
+
+    #####################################################################
+    # 6. Enable optional add-ons                                        #
+    #####################################################################
+    - name: Enable MicroK8s add-ons
+      command: microk8s enable {{ item }}
+      register: enable_result
+      changed_when: "'... is already enabled' not in enable_result.stdout"
+      # 'microk8s enable <addon>' prints '... is already enabled' if it's
+      # already enabled, so we parse that to avoid marking changed each time
+      loop: "{{ microk8s_addons }}"
+      when: microk8s_addons | length > 0
+

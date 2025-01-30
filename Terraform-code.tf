@@ -7,6 +7,7 @@ variable "instance_ami" {
   default     = "ami-08970251d20e940b0"
 }
 
+
 variable "instance_type" {
   description = "Instance type to use for all instances"
   default     = "t2.micro"
@@ -133,7 +134,7 @@ resource "aws_instance" "jenkins_worker" {
 }
 
 resource "aws_instance" "kubernetes_master" {
-  ami           = var.instance_ami
+  ami           = "ami-0cb91c7de36eed2cb"
   instance_type = "t3a.medium"
   key_name      = "Devops Final"
   security_groups = [aws_security_group.common_sg.name]
@@ -144,7 +145,7 @@ resource "aws_instance" "kubernetes_master" {
 }
 
 resource "aws_instance" "kubernetes_agent" {
-  ami           = var.instance_ami
+  ami           = "ami-0cb91c7de36eed2cb"
   instance_type = "t3a.medium"
   key_name      = "Devops Final"
   security_groups = [aws_security_group.common_sg.name]
@@ -194,8 +195,7 @@ output "ansible_inventory" {
           ansible_host     = aws_instance.pg_instance.public_ip
           ansible_user     = "ec2-user"
           ansible_ssh_key  = "~/.ssh/Devops Final.pem"
-        }
+        }}}})
       }
-    }
-  })
-}
+      
+

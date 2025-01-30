@@ -1,157 +1,22 @@
 "all":
   "hosts":
-    "jenkins_master":
-      "ansible_host": "3.129.39.113"
-      "ansible_ssh_key": |
-        -----BEGIN RSA PRIVATE KEY-----
-        MIIEpAIBAAKCAQEAtLtBeKamQb7EAl5MH379UzFNSa/ikeM663PVhsh0NxjU67b0
-        Mh97FZsMNbQ3a98SvlOyQUlqm6mXYPN1ugF7ku4JRobsxSwesj9V3CrbrmD2x6s8
-        wfZgFKwy9OIpMjLNUsYjDK5RpHJhkXaVZd17TATmjKD8ndVL9Od8v3+Kj3JykhUo
-        r3wXZ5y2HdSdXa3mF/HjdgTenHrEOiGk0Y8Wv+0Vvup0btnvwbDOJyYjMmZ2sBdr
-        Q96yM/Q7/ow6X8SNzpZUMBNsL5EHQLAp6M2Ewi8a47pLKIuFdNzEXee1SEth8zeH
-        sz/0rNCtlsgslNBqn4yBIRPa6f94MI0yB8zMBQIDAQABAoIBAEJsB7Xl2XiUOcl9
-        CpEQxN2MYxFP2P8w+fiKy9ELXtrY/3fZ94lsVHouT6B1KWE1zNeyPvMLnmizPXVe
-        RMglv1rSrQoEkIQuoOF1sYKHJdHCxS/A2UWX3Nv8JYYmkGlojll7hGomrs63UvB5
-        GpMjgSsBKhJJIE6Jk67gXNKsdyockTRFHLQU1ZzWGCmwmoLxaqJglBqfWOztbslf
-        ZaezuB1AmqyzAffRmxjHvimoq0cKH3ODtqaFsDTMP/vWWENMrsDAWwIyfna0lwni
-        MbhXswTx2v1rqD8AzGYLIE6dqt22sEAIENCU3y6/HVl3eg8ugyjLAH69Mcc4OEvs
-        Ik1Gr0ECgYEA6IyMBGPTIFg6iB/wtbR7NKwBQY8pA/g26i1iz3afjvGCSfA+kFih
-        SZDjIDaUfATWmwV48D9q/gV5LGErOFZaXZu8VOznCjA5fGyNOXOd63aqmeQcGh5X
-        /Xirkvu1G1vLV6GNVQmFFdqwHTRxEZlEGu5kDxXYOhx6k3g5f37Z+p0CgYEAxvT+
-        iOScNsrlY7X9ifbUduyTTvGOls6gc3RED/iFi1MeNRSGnry2P35Bb5lMqeF3udmm
-        Fr6ur0mJRhMebfEhCrT/U8ZmLItPJgA7Y6UFTchfdA+C7BMY0Tp1nbEKbkSoiRw+
-        At66NsQH0dQp4Az+gEsUUpCVGBKFFwNRUHB+BokCgYEA0gqwJP7tIRfPtkfzKIvd
-        hJOfhtGBoF4/a4CW8QAZ2gh1P8dJGyOSelnta5kgwGu2Usq8k3MUdmAHNHiHixkk
-        Acy6bJKVk/Q+2A1L+YpeJuFF8j3AzC6AFyc5AUdsK0vb/Eik2RwCIt0lmRtWzSh8
-        BT8xDRcT+FjktfIvLOMsi1kCgYEAr2GJ+sxjNB25BiOIQxTVh5vV4vImuqOcZwnn
-        cZimyAFWEH5uiQFbOi8mqaSeIuaA7tCAi249eIE/RAlYepvjf5e7t3Kd4MhQ1fPA
-        Zn8yZLWsBxghVc8jwlRhF8fXpQpa8rp1o3wI9HvrVLlMzJdHxXnpiTqwYw74SSgA
-        hwMS5NkCgYAcIXzlGYIVTdmUc/RvXkS6EQeytuz0/7wAWOplXkiDTPWxg9T+dU7K
-        Lk773aiGaOvnVPPzfI9acCqt+w2ZSO7qAdSFtwjMPL2nN2Q0nAc+V5AycMJDBKQe
-        TEOSyj6iLhppXRy59KLajBUOjt6msGX5yV5EnJmnVy9N16Oif3JI9Q==
-        -----END RSA PRIVATE KEY-----
-      "ansible_user": "ec2-user"
-    "jenkins_worker":
-      "ansible_host": "18.225.255.34"
-      "ansible_ssh_key": |
-        -----BEGIN RSA PRIVATE KEY-----
-        MIIEpAIBAAKCAQEAtLtBeKamQb7EAl5MH379UzFNSa/ikeM663PVhsh0NxjU67b0
-        Mh97FZsMNbQ3a98SvlOyQUlqm6mXYPN1ugF7ku4JRobsxSwesj9V3CrbrmD2x6s8
-        wfZgFKwy9OIpMjLNUsYjDK5RpHJhkXaVZd17TATmjKD8ndVL9Od8v3+Kj3JykhUo
-        r3wXZ5y2HdSdXa3mF/HjdgTenHrEOiGk0Y8Wv+0Vvup0btnvwbDOJyYjMmZ2sBdr
-        Q96yM/Q7/ow6X8SNzpZUMBNsL5EHQLAp6M2Ewi8a47pLKIuFdNzEXee1SEth8zeH
-        sz/0rNCtlsgslNBqn4yBIRPa6f94MI0yB8zMBQIDAQABAoIBAEJsB7Xl2XiUOcl9
-        CpEQxN2MYxFP2P8w+fiKy9ELXtrY/3fZ94lsVHouT6B1KWE1zNeyPvMLnmizPXVe
-        RMglv1rSrQoEkIQuoOF1sYKHJdHCxS/A2UWX3Nv8JYYmkGlojll7hGomrs63UvB5
-        GpMjgSsBKhJJIE6Jk67gXNKsdyockTRFHLQU1ZzWGCmwmoLxaqJglBqfWOztbslf
-        ZaezuB1AmqyzAffRmxjHvimoq0cKH3ODtqaFsDTMP/vWWENMrsDAWwIyfna0lwni
-        MbhXswTx2v1rqD8AzGYLIE6dqt22sEAIENCU3y6/HVl3eg8ugyjLAH69Mcc4OEvs
-        Ik1Gr0ECgYEA6IyMBGPTIFg6iB/wtbR7NKwBQY8pA/g26i1iz3afjvGCSfA+kFih
-        SZDjIDaUfATWmwV48D9q/gV5LGErOFZaXZu8VOznCjA5fGyNOXOd63aqmeQcGh5X
-        /Xirkvu1G1vLV6GNVQmFFdqwHTRxEZlEGu5kDxXYOhx6k3g5f37Z+p0CgYEAxvT+
-        iOScNsrlY7X9ifbUduyTTvGOls6gc3RED/iFi1MeNRSGnry2P35Bb5lMqeF3udmm
-        Fr6ur0mJRhMebfEhCrT/U8ZmLItPJgA7Y6UFTchfdA+C7BMY0Tp1nbEKbkSoiRw+
-        At66NsQH0dQp4Az+gEsUUpCVGBKFFwNRUHB+BokCgYEA0gqwJP7tIRfPtkfzKIvd
-        hJOfhtGBoF4/a4CW8QAZ2gh1P8dJGyOSelnta5kgwGu2Usq8k3MUdmAHNHiHixkk
-        Acy6bJKVk/Q+2A1L+YpeJuFF8j3AzC6AFyc5AUdsK0vb/Eik2RwCIt0lmRtWzSh8
-        BT8xDRcT+FjktfIvLOMsi1kCgYEAr2GJ+sxjNB25BiOIQxTVh5vV4vImuqOcZwnn
-        cZimyAFWEH5uiQFbOi8mqaSeIuaA7tCAi249eIE/RAlYepvjf5e7t3Kd4MhQ1fPA
-        Zn8yZLWsBxghVc8jwlRhF8fXpQpa8rp1o3wI9HvrVLlMzJdHxXnpiTqwYw74SSgA
-        hwMS5NkCgYAcIXzlGYIVTdmUc/RvXkS6EQeytuz0/7wAWOplXkiDTPWxg9T+dU7K
-        Lk773aiGaOvnVPPzfI9acCqt+w2ZSO7qAdSFtwjMPL2nN2Q0nAc+V5AycMJDBKQe
-        TEOSyj6iLhppXRy59KLajBUOjt6msGX5yV5EnJmnVy9N16Oif3JI9Q==
-        -----END RSA PRIVATE KEY-----
-      "ansible_user": "ec2-user"
-    "kubernetes_agent":
-      "ansible_host": "18.191.228.51"
-      "ansible_ssh_key": |
-        -----BEGIN RSA PRIVATE KEY-----
-        MIIEpAIBAAKCAQEAtLtBeKamQb7EAl5MH379UzFNSa/ikeM663PVhsh0NxjU67b0
-        Mh97FZsMNbQ3a98SvlOyQUlqm6mXYPN1ugF7ku4JRobsxSwesj9V3CrbrmD2x6s8
-        wfZgFKwy9OIpMjLNUsYjDK5RpHJhkXaVZd17TATmjKD8ndVL9Od8v3+Kj3JykhUo
-        r3wXZ5y2HdSdXa3mF/HjdgTenHrEOiGk0Y8Wv+0Vvup0btnvwbDOJyYjMmZ2sBdr
-        Q96yM/Q7/ow6X8SNzpZUMBNsL5EHQLAp6M2Ewi8a47pLKIuFdNzEXee1SEth8zeH
-        sz/0rNCtlsgslNBqn4yBIRPa6f94MI0yB8zMBQIDAQABAoIBAEJsB7Xl2XiUOcl9
-        CpEQxN2MYxFP2P8w+fiKy9ELXtrY/3fZ94lsVHouT6B1KWE1zNeyPvMLnmizPXVe
-        RMglv1rSrQoEkIQuoOF1sYKHJdHCxS/A2UWX3Nv8JYYmkGlojll7hGomrs63UvB5
-        GpMjgSsBKhJJIE6Jk67gXNKsdyockTRFHLQU1ZzWGCmwmoLxaqJglBqfWOztbslf
-        ZaezuB1AmqyzAffRmxjHvimoq0cKH3ODtqaFsDTMP/vWWENMrsDAWwIyfna0lwni
-        MbhXswTx2v1rqD8AzGYLIE6dqt22sEAIENCU3y6/HVl3eg8ugyjLAH69Mcc4OEvs
-        Ik1Gr0ECgYEA6IyMBGPTIFg6iB/wtbR7NKwBQY8pA/g26i1iz3afjvGCSfA+kFih
-        SZDjIDaUfATWmwV48D9q/gV5LGErOFZaXZu8VOznCjA5fGyNOXOd63aqmeQcGh5X
-        /Xirkvu1G1vLV6GNVQmFFdqwHTRxEZlEGu5kDxXYOhx6k3g5f37Z+p0CgYEAxvT+
-        iOScNsrlY7X9ifbUduyTTvGOls6gc3RED/iFi1MeNRSGnry2P35Bb5lMqeF3udmm
-        Fr6ur0mJRhMebfEhCrT/U8ZmLItPJgA7Y6UFTchfdA+C7BMY0Tp1nbEKbkSoiRw+
-        At66NsQH0dQp4Az+gEsUUpCVGBKFFwNRUHB+BokCgYEA0gqwJP7tIRfPtkfzKIvd
-        hJOfhtGBoF4/a4CW8QAZ2gh1P8dJGyOSelnta5kgwGu2Usq8k3MUdmAHNHiHixkk
-        Acy6bJKVk/Q+2A1L+YpeJuFF8j3AzC6AFyc5AUdsK0vb/Eik2RwCIt0lmRtWzSh8
-        BT8xDRcT+FjktfIvLOMsi1kCgYEAr2GJ+sxjNB25BiOIQxTVh5vV4vImuqOcZwnn
-        cZimyAFWEH5uiQFbOi8mqaSeIuaA7tCAi249eIE/RAlYepvjf5e7t3Kd4MhQ1fPA
-        Zn8yZLWsBxghVc8jwlRhF8fXpQpa8rp1o3wI9HvrVLlMzJdHxXnpiTqwYw74SSgA
-        hwMS5NkCgYAcIXzlGYIVTdmUc/RvXkS6EQeytuz0/7wAWOplXkiDTPWxg9T+dU7K
-        Lk773aiGaOvnVPPzfI9acCqt+w2ZSO7qAdSFtwjMPL2nN2Q0nAc+V5AycMJDBKQe
-        TEOSyj6iLhppXRy59KLajBUOjt6msGX5yV5EnJmnVy9N16Oif3JI9Q==
-        -----END RSA PRIVATE KEY-----
-      "ansible_user": "ec2-user"
-    "kubernetes_master":
-      "ansible_host": "3.23.63.2"
-      "ansible_ssh_key": |
-        -----BEGIN RSA PRIVATE KEY-----
-        MIIEpAIBAAKCAQEAtLtBeKamQb7EAl5MH379UzFNSa/ikeM663PVhsh0NxjU67b0
-        Mh97FZsMNbQ3a98SvlOyQUlqm6mXYPN1ugF7ku4JRobsxSwesj9V3CrbrmD2x6s8
-        wfZgFKwy9OIpMjLNUsYjDK5RpHJhkXaVZd17TATmjKD8ndVL9Od8v3+Kj3JykhUo
-        r3wXZ5y2HdSdXa3mF/HjdgTenHrEOiGk0Y8Wv+0Vvup0btnvwbDOJyYjMmZ2sBdr
-        Q96yM/Q7/ow6X8SNzpZUMBNsL5EHQLAp6M2Ewi8a47pLKIuFdNzEXee1SEth8zeH
-        sz/0rNCtlsgslNBqn4yBIRPa6f94MI0yB8zMBQIDAQABAoIBAEJsB7Xl2XiUOcl9
-        CpEQxN2MYxFP2P8w+fiKy9ELXtrY/3fZ94lsVHouT6B1KWE1zNeyPvMLnmizPXVe
-        RMglv1rSrQoEkIQuoOF1sYKHJdHCxS/A2UWX3Nv8JYYmkGlojll7hGomrs63UvB5
-        GpMjgSsBKhJJIE6Jk67gXNKsdyockTRFHLQU1ZzWGCmwmoLxaqJglBqfWOztbslf
-        ZaezuB1AmqyzAffRmxjHvimoq0cKH3ODtqaFsDTMP/vWWENMrsDAWwIyfna0lwni
-        MbhXswTx2v1rqD8AzGYLIE6dqt22sEAIENCU3y6/HVl3eg8ugyjLAH69Mcc4OEvs
-        Ik1Gr0ECgYEA6IyMBGPTIFg6iB/wtbR7NKwBQY8pA/g26i1iz3afjvGCSfA+kFih
-        SZDjIDaUfATWmwV48D9q/gV5LGErOFZaXZu8VOznCjA5fGyNOXOd63aqmeQcGh5X
-        /Xirkvu1G1vLV6GNVQmFFdqwHTRxEZlEGu5kDxXYOhx6k3g5f37Z+p0CgYEAxvT+
-        iOScNsrlY7X9ifbUduyTTvGOls6gc3RED/iFi1MeNRSGnry2P35Bb5lMqeF3udmm
-        Fr6ur0mJRhMebfEhCrT/U8ZmLItPJgA7Y6UFTchfdA+C7BMY0Tp1nbEKbkSoiRw+
-        At66NsQH0dQp4Az+gEsUUpCVGBKFFwNRUHB+BokCgYEA0gqwJP7tIRfPtkfzKIvd
-        hJOfhtGBoF4/a4CW8QAZ2gh1P8dJGyOSelnta5kgwGu2Usq8k3MUdmAHNHiHixkk
-        Acy6bJKVk/Q+2A1L+YpeJuFF8j3AzC6AFyc5AUdsK0vb/Eik2RwCIt0lmRtWzSh8
-        BT8xDRcT+FjktfIvLOMsi1kCgYEAr2GJ+sxjNB25BiOIQxTVh5vV4vImuqOcZwnn
-        cZimyAFWEH5uiQFbOi8mqaSeIuaA7tCAi249eIE/RAlYepvjf5e7t3Kd4MhQ1fPA
-        Zn8yZLWsBxghVc8jwlRhF8fXpQpa8rp1o3wI9HvrVLlMzJdHxXnpiTqwYw74SSgA
-        hwMS5NkCgYAcIXzlGYIVTdmUc/RvXkS6EQeytuz0/7wAWOplXkiDTPWxg9T+dU7K
-        Lk773aiGaOvnVPPzfI9acCqt+w2ZSO7qAdSFtwjMPL2nN2Q0nAc+V5AycMJDBKQe
-        TEOSyj6iLhppXRy59KLajBUOjt6msGX5yV5EnJmnVy9N16Oif3JI9Q==
-        -----END RSA PRIVATE KEY-----
-      "ansible_user": "ec2-user"
-    "pg_instance":
+    "PG-instance":
       "ansible_host": "3.135.205.118"
-      "ansible_ssh_key": |
-        -----BEGIN RSA PRIVATE KEY-----
-        MIIEpAIBAAKCAQEAtLtBeKamQb7EAl5MH379UzFNSa/ikeM663PVhsh0NxjU67b0
-        Mh97FZsMNbQ3a98SvlOyQUlqm6mXYPN1ugF7ku4JRobsxSwesj9V3CrbrmD2x6s8
-        wfZgFKwy9OIpMjLNUsYjDK5RpHJhkXaVZd17TATmjKD8ndVL9Od8v3+Kj3JykhUo
-        r3wXZ5y2HdSdXa3mF/HjdgTenHrEOiGk0Y8Wv+0Vvup0btnvwbDOJyYjMmZ2sBdr
-        Q96yM/Q7/ow6X8SNzpZUMBNsL5EHQLAp6M2Ewi8a47pLKIuFdNzEXee1SEth8zeH
-        sz/0rNCtlsgslNBqn4yBIRPa6f94MI0yB8zMBQIDAQABAoIBAEJsB7Xl2XiUOcl9
-        CpEQxN2MYxFP2P8w+fiKy9ELXtrY/3fZ94lsVHouT6B1KWE1zNeyPvMLnmizPXVe
-        RMglv1rSrQoEkIQuoOF1sYKHJdHCxS/A2UWX3Nv8JYYmkGlojll7hGomrs63UvB5
-        GpMjgSsBKhJJIE6Jk67gXNKsdyockTRFHLQU1ZzWGCmwmoLxaqJglBqfWOztbslf
-        ZaezuB1AmqyzAffRmxjHvimoq0cKH3ODtqaFsDTMP/vWWENMrsDAWwIyfna0lwni
-        MbhXswTx2v1rqD8AzGYLIE6dqt22sEAIENCU3y6/HVl3eg8ugyjLAH69Mcc4OEvs
-        Ik1Gr0ECgYEA6IyMBGPTIFg6iB/wtbR7NKwBQY8pA/g26i1iz3afjvGCSfA+kFih
-        SZDjIDaUfATWmwV48D9q/gV5LGErOFZaXZu8VOznCjA5fGyNOXOd63aqmeQcGh5X
-        /Xirkvu1G1vLV6GNVQmFFdqwHTRxEZlEGu5kDxXYOhx6k3g5f37Z+p0CgYEAxvT+
-        iOScNsrlY7X9ifbUduyTTvGOls6gc3RED/iFi1MeNRSGnry2P35Bb5lMqeF3udmm
-        Fr6ur0mJRhMebfEhCrT/U8ZmLItPJgA7Y6UFTchfdA+C7BMY0Tp1nbEKbkSoiRw+
-        At66NsQH0dQp4Az+gEsUUpCVGBKFFwNRUHB+BokCgYEA0gqwJP7tIRfPtkfzKIvd
-        hJOfhtGBoF4/a4CW8QAZ2gh1P8dJGyOSelnta5kgwGu2Usq8k3MUdmAHNHiHixkk
-        Acy6bJKVk/Q+2A1L+YpeJuFF8j3AzC6AFyc5AUdsK0vb/Eik2RwCIt0lmRtWzSh8
-        BT8xDRcT+FjktfIvLOMsi1kCgYEAr2GJ+sxjNB25BiOIQxTVh5vV4vImuqOcZwnn
-        cZimyAFWEH5uiQFbOi8mqaSeIuaA7tCAi249eIE/RAlYepvjf5e7t3Kd4MhQ1fPA
-        Zn8yZLWsBxghVc8jwlRhF8fXpQpa8rp1o3wI9HvrVLlMzJdHxXnpiTqwYw74SSgA
-        hwMS5NkCgYAcIXzlGYIVTdmUc/RvXkS6EQeytuz0/7wAWOplXkiDTPWxg9T+dU7K
-        Lk773aiGaOvnVPPzfI9acCqt+w2ZSO7qAdSFtwjMPL2nN2Q0nAc+V5AycMJDBKQe
-        TEOSyj6iLhppXRy59KLajBUOjt6msGX5yV5EnJmnVy9N16Oif3JI9Q==
-        -----END RSA PRIVATE KEY-----
+      "ansible_ssh_key": "~/.ssh/Devops Final.pem"
+      "ansible_user": "ec2-user"
+    "jenkins-master":
+      "ansible_host": "3.129.39.113"
+      "ansible_ssh_key": "~/.ssh/Devops Final.pem"
+      "ansible_user": "ec2-user"
+    "jenkins-worker":
+      "ansible_host": "18.225.255.34"
+      "ansible_ssh_key": "~/.ssh/Devops Final.pem"
+      "ansible_user": "ec2-user"
+    "kubernetes-agent":
+      "ansible_host": "18.191.228.51"
+      "ansible_ssh_key": "~/.ssh/Devops Final.pem"
+      "ansible_user": "ec2-user"
+    "kubernetes-master":
+      "ansible_host": "3.23.63.2"
+      "ansible_ssh_key": "~/.ssh/Devops Final.pem"
       "ansible_user": "ec2-user"
