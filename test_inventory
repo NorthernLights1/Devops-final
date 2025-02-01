@@ -1,0 +1,19 @@
+[jenkins-master]
+172.31.11.10
+[jenkins-worker]
+172.31.9.157
+
+[kubernetes-master]
+172.31.41.114
+[kubernetes-agent]
+172.31.43.31
+
+[kubernetes:children]
+kubernetes-master
+kubernetes-agent
+
+[kubernetes:vars]
+ansible_user = ubuntu
+
+[PG-instance]
+172.31.15.34
